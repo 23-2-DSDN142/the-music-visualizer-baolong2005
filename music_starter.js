@@ -6,7 +6,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   rectMode(CENTER)
   textSize(24);
   strokeWeight(9);
-  stroke(drum, 80, 80);
+  stroke(drum, 50, 50);
 
   let drumMap = map(drum, 0, 100, 30, 90);
   let lengthOfLine = 300;
