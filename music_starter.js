@@ -34,24 +34,26 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   
     translate(width/2, height/2);
   let wave = fft.waveform();
+
     beginShape()
   for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 1));
-  let r = map(wave[index], -1, 1, 150, 350)
+  let index = floor(map(i, 0, 180, 0, wave.length - 2));
+  let r = map(wave[index], -1, 1, 100, 200)
   let x = r * sin(i);
   let y = r * cos(i); 
     vertex(x, y);
     endShape()
-  }
+}
     beginShape()
-    for(let i = 0; i <= 180; i++){
-    let index = floor(map(i, 0, 180, 0, wave.length - 1));
-    let r = map(wave[index], -1, 1, 150, 350)
-    let x = r * -sin(i);
-    let y = r * cos(i); 
+  for(let i = 0; i <= 180; i++){
+  let index = floor(map(i, 0, 180, 0, wave.length - 2));
+  let r = map(wave[index], -1, 1, 100, 200)
+  let x = r * -sin(i);
+  let y = r * cos(i); 
       vertex(x, y);
       endShape()
   }
+      translate(width, height);
   //if(firstRun){
     
     //testImg = loadImage('football_image.png');
@@ -59,7 +61,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     //firstRun = false
   //}
     //scale(0.4);
-    //image(testImg, 944, 419);
+    //image(testImg, width, height);
 
 
 
