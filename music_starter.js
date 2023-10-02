@@ -1,22 +1,24 @@
 
 // vocal, drum, bass, and other are volumes ranging from 0 to 100
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
+  colorMode(HSB, 100);
   background(20)
   textFont('Helvetica'); // please use CSS safe fonts
   rectMode(CENTER)
   textSize(24);
-  strokeWeight(9);
-  stroke(drum, 100, 100);
-
-  let drumMap = map(drum, 0, 100, 30, 90);
-  let lengthOfLine = 300;
-  let LineStart = 100
-  let LineEnd = LineStart + lengthOfLine;
-
+  strokeWeight(1);
   
+
+  let drumMap = map(drum, 0, 100, 5, 50);
+  let posXofCircle = 480;
+  let posYofCircle = 270;
+
+  stroke(drumMap, 100, 100);
   for(let i = 1; i <= drumMap; i++){
-    let lineStep = i*20;
-    line(LineStart, lineStep, LineEnd, lineStep);
+    let sizeofCircle = i*10;
+    fill(20);
+    ellipse(posXofCircle, posYofCircle, sizeofCircle);
+    ellipse(posXofCircle, posYofCircle, sizeofCircle/2);
   }
    
    // display "words"
