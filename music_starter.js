@@ -6,7 +6,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   rectMode(CENTER)
   textSize(24);
   strokeWeight(9);
-  stroke(drum, 50, 50);
+  stroke(drum, 100, 100);
 
   let drumMap = map(drum, 0, 100, 30, 90);
   let lengthOfLine = 300;
@@ -14,8 +14,8 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   let LineEnd = LineStart + lengthOfLine;
 
   
-  for(let i = 1; i < 5; i++){
-    let lineStep = i*10;
+  for(let i = 1; i <= drumMap; i++){
+    let lineStep = i*20;
     line(LineStart, lineStep, LineEnd, lineStep);
   }
    
