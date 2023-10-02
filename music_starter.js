@@ -3,16 +3,17 @@
   
   let firstRun = true;
   let testImg;
-
+  let fft;
+  
+  fft = new p5.FFT();
 
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
   background(20)  
   textSize(24);
+  stroke(255);
+  angleMode(DEGREES);
 
-    
   let vocalMap = map(vocal, 0, 100, 60, 100);
-  let posXofCircle = 480;
-  let posYofCircle = 270;
   let blackColor = color(5, 5, 5);
   let grayColor = color(51, 51, 51);
     console.log(song.currentTime());
@@ -27,22 +28,38 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     stroke(strokeColor);
     line(0, i, width, i);
   }
+    
     colorMode(HSB, 100);
     stroke(vocalMap, 100, 100);
-    strokeWeight(1);
-  for(let i = 1; i <= vocalMap; i++){
-  let sizeofCircle = i*3;
-    fill(20);
-    ellipse(posXofCircle, posYofCircle, sizeofCircle);
+  
+    translate(width/2, height/2);
+  let wave = fft.waveform();
+    beginShape()
+  for(let i = 0; i <= 180; i++){
+  let index = floor(map(i, 0, 180, 0, wave.length - 1));
+  let r = map(wave[index], -1, 1, 150, 350)
+  let x = r * sin(i);
+  let y = r * cos(i); 
+    vertex(x, y);
+    endShape()
   }
-  if(firstRun){
+    beginShape()
+    for(let i = 0; i <= 180; i++){
+    let index = floor(map(i, 0, 180, 0, wave.length - 1));
+    let r = map(wave[index], -1, 1, 150, 350)
+    let x = r * -sin(i);
+    let y = r * cos(i); 
+      vertex(x, y);
+      endShape()
+  }
+  //if(firstRun){
     
-    testImg = loadImage('football_image.png');
+    //testImg = loadImage('football_image.png');
 
-    firstRun = false
-  }
-    scale(0.4);
-    image(testImg, 944, 419);
+    //firstRun = false
+  //}
+    //scale(0.4);
+    //image(testImg, 944, 419);
 
 
 
