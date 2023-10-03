@@ -13,10 +13,10 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   stroke(255);
   angleMode(DEGREES);
 
-  let vocalMap = map(vocal, 0, 100, 60, 100);
+  let vocalMap = map(vocal, 0, 100, 50, 150);
   let blackColor = color(5, 5, 5);
   let grayColor = color(51, 51, 51);
-    console.log(song.currentTime());
+    //console.log(song.currentTime());
 
     noFill();
     strokeWeight(3);
@@ -30,14 +30,14 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   }
     
     colorMode(HSB, 100);
-    stroke(vocalMap, 100, 100);
+    stroke(vocalMap, 150, 150);
   
     translate(width/2, height/2);
   let wave = fft.waveform();
 
     beginShape()
   for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 2));
+  let index = floor(map(i, 0, 180, 0, wave.length - 900));
   let r = map(wave[index], -1, 1, 100, 200)
   let x = r * sin(i);
   let y = r * cos(i); 
@@ -46,22 +46,22 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 }
     beginShape()
   for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 2));
+  let index = floor(map(i, 0, 180, 0, wave.length - 900));
   let r = map(wave[index], -1, 1, 100, 200)
   let x = r * -sin(i);
   let y = r * cos(i); 
       vertex(x, y);
       endShape()
   }
-      translate(width, height);
+    
   //if(firstRun){
     
     //testImg = loadImage('football_image.png');
 
     //firstRun = false
   //}
-    //scale(0.4);
-    //image(testImg, width, height);
+    //scale(0.5);
+    //image(testImg, width-1212, height - 800);
 
 
 
