@@ -13,7 +13,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   stroke(255);
   angleMode(DEGREES);
 
-  let vocalMap = map(vocal, 0, 100, 50, 150);
+  let bassMap = map(bass, 0, 100, 50, 150);
   let blackColor = color(5, 5, 5);
   let grayColor = color(51, 51, 51);
     //console.log(song.currentTime());
@@ -21,6 +21,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     noFill();
     strokeWeight(3);
   
+  // Background   
   let sizeofBlock = 600;
   for(let i = 0; i < sizeofBlock; i++){
   let gradientAmount = map(i, 0, sizeofBlock, 0, 1);
@@ -28,16 +29,36 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     stroke(strokeColor);
     line(0, i, width, i);
   }
-    
+
+
+  // Vocal circle
     colorMode(HSB, 100);
-    stroke(vocalMap, 150, 150);
+    stroke(bassMap, 150, 150);
   
     translate(width/2, height/2);
   let wave = fft.waveform();
 
     beginShape()
   for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 900));
+  let index = floor(map(i, 0, 180, 0, wave.length - 950));
+  let r = map(wave[index], -1, 1, 100, 205)
+  let x = r * sin(i);
+  let y = r * cos(i); 
+    vertex(x, y);
+    endShape()
+}
+    beginShape()
+  for(let i = 0; i <= 180; i++){
+  let index = floor(map(i, 0, 180, 0, wave.length - 950));
+  let r = map(wave[index], -1, 1, 100, 205)
+  let x = r * -sin(i);
+  let y = r * cos(i); 
+      vertex(x, y);
+      endShape()
+  }
+  beginShape()
+  for(let i = 0; i <= 180; i++){
+  let index = floor(map(i, 0, 180, 0, wave.length - 1000));
   let r = map(wave[index], -1, 1, 100, 200)
   let x = r * sin(i);
   let y = r * cos(i); 
@@ -46,7 +67,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
 }
     beginShape()
   for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 900));
+  let index = floor(map(i, 0, 180, 0, wave.length - 1000));
   let r = map(wave[index], -1, 1, 100, 200)
   let x = r * -sin(i);
   let y = r * cos(i); 
