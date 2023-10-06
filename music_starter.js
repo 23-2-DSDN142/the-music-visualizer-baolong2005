@@ -71,7 +71,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     }
     show(){
       noStroke();
-      fill(255);
+      fill(bassMap, 150, 150);
       ellipse(this.pos.x, this.pos.y, 4);
       //scale(0.5);
   
