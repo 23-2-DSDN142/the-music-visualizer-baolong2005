@@ -4,7 +4,7 @@
   let firstRun = true;
   let testImg;
   let fft;
-  let star_particles = [];
+  let particles = [];
 
   fft = new p5.FFT();
 
@@ -38,35 +38,72 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     stroke(bassMap, 150, 150);
   
     translate(width/2, height/2);
-  let wave = fft.waveform();
-  for(let t = -1; t <= 1; t+= 2){
-    beginShape()
-  for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 950));
-  let r = map(wave[index], -1, 1, 150, 205)
-  let x = r * sin(i) * t;
-  let y = r * cos(i); 
-    vertex(x, y);
-    endShape()
-}
-  }
+  //let wave = fft.waveform();
+  //for(let t = -1; t <= 1; t += 2){
+    //beginShape()
+  //for(let i = 0; i <= 180; i += 0.5){
+  //let index = floor(map(i, 0, 180, 0, wave.length - 950));
+  //let r = map(wave[index], -1, 1, 150, 205)
+  //let x = r * sin(i) * t;
+  //let y = r * cos(i); 
+    //vertex(x, y);
+    //endShape()
+//}
+  //}
+  //for(let t = -1; t <= 1; t += 2){
+    //beginShape()
+  //for(let i = 0; i <= 180; i += 0.5){
+  //let index = floor(map(i, 0, 180, 0, wave.length - 1000));
+  //let r = map(wave[index], -1, 1, 150, 200)
+  //let x = r * sin(i) * t;
+  //let y = r * cos(i); 
+    //vertex(x, y);
+    //endShape()
+//}
+  //}
+  class Particle {
+    constructor(){
+      this.pos = p5.Vector.random2D().mult(250);
+      this.vel = createVector(0, 0);
+      this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
 
-  let p = new star_particles();
-  star_particles.push(p)
+      this.w = random(3, 5);
+    }
+    show(){
+      noStroke();
+      fill(255);
+      ellipse(this.pos.x, this.pos.y, 4);
+      //scale(0.5);
+  
+      //star(this.pos.x, this.pos.y, 30, 70, 5);
+      
+    }
+    update() {
+      this.vel.add(this.acc);
+      this.pos.add(this.vel);
+    }
+    edges(){
+      if(this.posx < - width / 2 || this.pos.x > width / 2 ||
+      this.pos.y < - height / 2 || this.pos.y > height / 2) {
+        return true
+      } else {
+      return false
+      }
+    }
+  }  
+  var p = new Particle();
+  particles.push(p)
 
-  for(let i = 0; i < star_particles.length; i++){
-      star_particles[i].show()
+  for(let i = particles.length - 1; i >= 0; i--){
+    if(!particles[i].edges()) {
+      particles[i].update()
+      particles[i].show()
+    } else {
+      particles.splice(i, 1)
+    }
+
   }
-class star_particles {
-  constructor(){
-    this.pos = p5.Vector.random2D().mult(250);
-  }
-  show(){
-    scale(2);
-    star(this.pos.x, this.pos.y, 30, 70, 5);
-    
-  }
-}  
+  
 
 
   //translate(width * 0.8, height * 0.5);
