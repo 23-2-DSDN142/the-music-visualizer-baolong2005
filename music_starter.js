@@ -4,7 +4,8 @@
   let firstRun = true;
   let testImg;
   let fft;
-  
+  let star_particles = [];
+
   fft = new p5.FFT();
 
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -38,75 +39,58 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   
     translate(width/2, height/2);
   let wave = fft.waveform();
-
+  for(let t = -1; t <= 1; t+= 2){
     beginShape()
   for(let i = 0; i <= 180; i++){
   let index = floor(map(i, 0, 180, 0, wave.length - 950));
   let r = map(wave[index], -1, 1, 150, 205)
-  let x = r * sin(i);
+  let x = r * sin(i) * t;
   let y = r * cos(i); 
     vertex(x, y);
     endShape()
 }
-    beginShape()
-  for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 950));
-  let r = map(wave[index], -1, 1, 150, 205)
-  let x = r * -sin(i);
-  let y = r * cos(i); 
-      vertex(x, y);
-      endShape()
   }
-  beginShape()
-  for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 1000));
-  let r = map(wave[index], -1, 1, 150, 200)
-  let x = r * sin(i);
-  let y = r * cos(i); 
-    vertex(x, y);
-    endShape()
-}
-    beginShape()
-  for(let i = 0; i <= 180; i++){
-  let index = floor(map(i, 0, 180, 0, wave.length - 1000));
-  let r = map(wave[index], -1, 1, 150, 200)
-  let x = r * -sin(i);
-  let y = r * cos(i); 
-      vertex(x, y);
-      endShape()
-  }
-  
 
-angleMode(RADIANS)
+  let p = new star_particles();
+  star_particles.push(p)
+
+  for(let i = 0; i < star_particles.length; i++){
+      star_particles[i].show()
+  }
+class star_particles {
+  constructor(){
+    this.pos = p5.Vector.random2D().mult(250);
+  }
+  show(){
+    scale(2);
+    star(this.pos.x, this.pos.y, 30, 70, 5);
+    
+  }
+}  
+
+
   //translate(width * 0.8, height * 0.5);
-  scale(vocalMap / 40)
-  rotate(frameCount / -100.0);
-  star(0, 0, 30, 70, 5);
+    //scale(vocalMap / 40)
+    //rotate(frameCount / -100.0);
+    //star(0, 0, 30, 70, 5);
   
 
-  function star(x, y, radius1, radius2, npoints) {
-    let angle = TWO_PI / npoints;
-    let halfAngle = angle / 2.0;
+function star(x, y, radius1, radius2, npoints) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
     beginShape();
-    for (let a = 0; a < TWO_PI; a += angle) {
-      let sx = x + cos(a) * radius2;
-      let sy = y + sin(a) * radius2;
-      vertex(sx, sy);
-      sx = x + cos(a + halfAngle) * radius1;
-      sy = y + sin(a + halfAngle) * radius1;
-      vertex(sx, sy);
+  for (let a = 0; a < TWO_PI; a += angle) {
+  let sx = x + cos(a) * radius2;
+  let sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a + halfAngle) * radius1;
+    sy = y + sin(a + halfAngle) * radius1;
+    vertex(sx, sy);
     }
     endShape(CLOSE);
   }
     
-  //if(firstRun){
-    
-    //testImg = loadImage('football_image.png');
 
-    //firstRun = false
-  //}
-    //scale(0.5);
-    //image(testImg, width-1212, height - 800);
 
 
 
