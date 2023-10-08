@@ -5,7 +5,7 @@
   let testImg;
   let fft;
   let particles = [];
-
+  
   fft = new p5.FFT();
 
 function draw_one_frame(words, vocal, drum, bass, other, counter) {
@@ -17,7 +17,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   let vocalMap = map(drum, 0, 100, 60, 90);
   let bassMap = map(bass, 0, 100, 50, 150);
   let blackColor = color(5, 5, 5);
-  let grayColor = color(51, 51, 51);
+  let purpleColor = color(87, 6, 64);
     //console.log(song.currentTime());
 
     noFill();
@@ -27,7 +27,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
   let sizeofBlock = 600;
   for(let i = 0; i < sizeofBlock; i++){
   let gradientAmount = map(i, 0, sizeofBlock, 0, 1);
-  let strokeColor = lerpColor(blackColor, grayColor, gradientAmount);
+  let strokeColor = lerpColor(blackColor, purpleColor, gradientAmount);
     stroke(strokeColor);
     line(0, i, width, i);
   }
@@ -38,46 +38,38 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     stroke(bassMap, 150, 150);
   
     translate(width/2, height/2);
-  //let wave = fft.waveform();
-  //for(let t = -1; t <= 1; t += 2){
-    //beginShape()
-  //for(let i = 0; i <= 180; i += 0.5){
-  //let index = floor(map(i, 0, 180, 0, wave.length - 950));
-  //let r = map(wave[index], -1, 1, 150, 205)
-  //let x = r * sin(i) * t;
-  //let y = r * cos(i); 
-    //vertex(x, y);
-    //endShape()
-//}
-  //}
-  //for(let t = -1; t <= 1; t += 2){
-    //beginShape()
-  //for(let i = 0; i <= 180; i += 0.5){
-  //let index = floor(map(i, 0, 180, 0, wave.length - 1000));
-  //let r = map(wave[index], -1, 1, 150, 200)
-  //let x = r * sin(i) * t;
-  //let y = r * cos(i); 
-    //vertex(x, y);
-    //endShape()
-//}
-  //}
+  let wave = fft.waveform();
+  for(let t = -1; t <= 1; t += 2){
+    beginShape()
+  for(let i = 0; i <= 180; i += 0.5){
+  let index = floor(map(i, 0, 180, 0, wave.length - 950));
+  let r = map(wave[index], -1, 1, 150, 200)
+  let x = r * sin(i) * t;
+  let y = r * cos(i); 
+    vertex(x, y);
+    endShape()
+}
+  }
+  colorMode(RGB)
   class Particle {
     constructor(){
       this.pos = p5.Vector.random2D().mult(250);
       this.vel = createVector(0, 0);
-      this.acc = this.pos.copy().mult(random(0.0001, 0.00001));
+      this.acc = this.pos.copy().mult(random(0.00001, 0.000001));
 
       this.w = random(3, 5);
     }
     show(){
       noStroke();
-      fill(bassMap, 150, 150);
-      ellipse(this.pos.x, this.pos.y, 4);
-      //scale(0.5);
-  
-      //star(this.pos.x, this.pos.y, 30, 70, 5);
+      fill(207, 187, 19);
+      //ellipse(this.pos.x, this.pos.y, 4);
+      scale(0.5); 
+      rotate(bassMap / 2);
+      angleMode(RADIANS)
+      star(this.pos.x, this.pos.y, 30, 70, 5);
       
     }
+    
     update() {
       this.vel.add(this.acc);
       this.pos.add(this.vel);
@@ -103,14 +95,8 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     }
 
   }
-  
 
 
-  //translate(width * 0.8, height * 0.5);
-    //scale(vocalMap / 40)
-    //rotate(frameCount / -100.0);
-    //star(0, 0, 30, 70, 5);
-  
 
 function star(x, y, radius1, radius2, npoints) {
   let angle = TWO_PI / npoints;
@@ -124,6 +110,7 @@ function star(x, y, radius1, radius2, npoints) {
     sy = y + sin(a + halfAngle) * radius1;
     vertex(sx, sy);
     }
+    
     endShape(CLOSE);
   }
     
