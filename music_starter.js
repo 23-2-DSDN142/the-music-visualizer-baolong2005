@@ -68,7 +68,7 @@ function draw_one_frame(words, vocal, drum, bass, other, counter) {
     }
 
   }
-  
+
 }
 
 class Particle {
@@ -82,14 +82,14 @@ class Particle {
   show(bassMap) {
     push()
     noStroke();
-    
+
     // fill(207, 187, 19);
     // ellipse(this.pos.x, this.pos.y, 4);
     translate(width / 2 + this.pos.x, height / 2 + this.pos.y)
-    
+
     scale(0.2);
     rotate(bassMap / 2);
-    
+
     star(0, 0, 30, 70, 5);
     pop()
   }
@@ -110,7 +110,7 @@ class Particle {
 
 
 
-
+ // Star
 function star(x, y, radius1, radius2, npoints) {
   fill(207, 187, 19);
   angleMode(RADIANS)
